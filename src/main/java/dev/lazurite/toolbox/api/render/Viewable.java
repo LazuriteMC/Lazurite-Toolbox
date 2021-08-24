@@ -1,4 +1,4 @@
-package dev.lazurite.toolbox.render;
+package dev.lazurite.toolbox.api.render;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;

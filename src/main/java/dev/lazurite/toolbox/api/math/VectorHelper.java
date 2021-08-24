@@ -1,4 +1,4 @@
-package dev.lazurite.toolbox.math;
+package dev.lazurite.toolbox.api.math;
 
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;

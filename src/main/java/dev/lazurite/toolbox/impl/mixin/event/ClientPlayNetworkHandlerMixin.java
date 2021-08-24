@@ -1,6 +1,6 @@
-package dev.lazurite.toolbox.mixin.event;
+package dev.lazurite.toolbox.impl.mixin.event;
 
-import dev.lazurite.toolbox.event.BetterClientLifecycleEvents;
+import dev.lazurite.toolbox.api.event.BetterClientLifecycleEvents;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;

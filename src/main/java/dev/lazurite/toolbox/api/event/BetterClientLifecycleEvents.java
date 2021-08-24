@@ -1,4 +1,4 @@
-package dev.lazurite.toolbox.event;
+package dev.lazurite.toolbox.api.event;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

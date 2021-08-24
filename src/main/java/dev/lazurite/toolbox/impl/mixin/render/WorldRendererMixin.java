@@ -1,6 +1,6 @@
-package dev.lazurite.toolbox.mixin.render;
+package dev.lazurite.toolbox.impl.mixin.render;
 
-import dev.lazurite.toolbox.render.Viewable;
+import dev.lazurite.toolbox.api.render.Viewable;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.util.math.MatrixStack;

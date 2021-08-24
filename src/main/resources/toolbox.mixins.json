@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "dev.lazurite.toolbox.mixin",
+  "package": "dev.lazurite.toolbox.impl.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [],
   "client": [

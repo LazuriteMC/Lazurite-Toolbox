@@ -4,48 +4,48 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.world.ClientWorld;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.player.LocalPlayer;
 
 /**
  * These events are slightly more useful versions of what exist in FAPI.
  */
 @Environment(EnvType.CLIENT)
 public final class BetterClientLifecycleEvents {
-    public static final Event<LoadWorld> LOAD_WORLD = EventFactory.createArrayBacked(LoadWorld.class, (callbacks) -> (client, world) -> {
-        for (LoadWorld event : callbacks) {
-            event.onLoadWorld(client, world);
+    public static final Event<LoadLevel> LOAD_LEVEL = EventFactory.createArrayBacked(LoadLevel.class, (callbacks) -> (minecraft, level) -> {
+        for (var event : callbacks) {
+            event.onLoadWorld(minecraft, level);
         }
     });
 
-    public static final Event<GameJoin> GAME_JOIN = EventFactory.createArrayBacked(GameJoin.class, (callbacks) -> (client, world, player) -> {
-        for (GameJoin event : callbacks) {
-            event.onGameJoin(client, world, player);
+    public static final Event<Login> LOGIN = EventFactory.createArrayBacked(Login.class, (callbacks) -> (minecraft, level, player) -> {
+        for (var event : callbacks) {
+            event.onLogin(minecraft, level, player);
         }
     });
 
-    public static final Event<Disconnect> DISCONNECT = EventFactory.createArrayBacked(Disconnect.class, (callbacks) -> (client, world) -> {
-        for (Disconnect event : callbacks) {
-            event.onDisconnect(client, world);
+    public static final Event<Disconnect> DISCONNECT = EventFactory.createArrayBacked(Disconnect.class, (callbacks) -> (minecraft, level) -> {
+        for (var event : callbacks) {
+            event.onDisconnect(minecraft, level);
         }
     });
 
     private BetterClientLifecycleEvents() { }
 
     @FunctionalInterface
-    public interface LoadWorld {
-        void onLoadWorld(MinecraftClient client, ClientWorld world);
+    public interface LoadLevel {
+        void onLoadWorld(Minecraft minecraft, ClientLevel level);
     }
 
     @FunctionalInterface
-    public interface GameJoin {
-        void onGameJoin(MinecraftClient client, ClientWorld world, ClientPlayerEntity player);
+    public interface Login {
+        void onLogin(Minecraft minecraft, ClientLevel level, LocalPlayer player);
     }
 
     @FunctionalInterface
     public interface Disconnect {
-        void onDisconnect(MinecraftClient client, ClientWorld world);
+        void onDisconnect(Minecraft minecraft, ClientLevel level);
     }
 }
 

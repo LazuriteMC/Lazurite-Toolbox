@@ -1,73 +1,73 @@
 package dev.lazurite.toolbox.api.math;
 
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3f;
+import com.mojang.math.Vector3d;
+import com.mojang.math.Vector3f;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.Mth;
 
 /**
  * A useful helper for dealing with Minecraft vectors.
  */
 public class VectorHelper {
-    public static Vec3f toVec3f(Vec3d vec3d) {
-        return new Vec3f((float) vec3d.x, (float) vec3d.y, (float) vec3d.z);
+    public static Vector3f toVector3f(Vector3d vector3d) {
+        return new Vector3f((float) vector3d.x, (float) vector3d.y, (float) vector3d.z);
     }
 
-    public static Vec3d toVec3d(Vec3f vec3f) {
-        return new Vec3d(vec3f.getX(), vec3f.getY(), vec3f.getZ());
+    public static Vector3d toVector3d(Vector3f vector3f) {
+        return new Vector3d(vector3f.x(), vector3f.y(), vector3f.z());
     }
 
     /**
-     * Lerps two {@link Vec3f} objects using tick delta.
+     * Lerps two {@link Vector3f} objects using tick delta.
      * @param vec1 the first float vector
      * @param vec2 the second float vector
      * @param delta minecraft tick delta
-     * @return the newly lerped {@link Vec3f}
+     * @return the newly lerped {@link Vector3f}
      */
-    public static Vec3f lerp(Vec3f vec1, Vec3f vec2, float delta) {
-        return new Vec3f(
-            MathHelper.lerp(delta, vec1.getX(), vec2.getX()),
-            MathHelper.lerp(delta, vec1.getY(), vec2.getY()),
-            MathHelper.lerp(delta, vec1.getZ(), vec2.getZ())
+    public static Vector3f lerp(Vector3f vec1, Vector3f vec2, float delta) {
+        return new Vector3f(
+            Mth.lerp(delta, vec1.x(), vec2.x()),
+            Mth.lerp(delta, vec1.y(), vec2.y()),
+            Mth.lerp(delta, vec1.z(), vec2.z())
         );
     }
 
     /**
-     * Lerps two {@link Vec3d} objects using tick delta.
+     * Lerps two {@link Vector3d} objects using tick delta.
      * @param vec1 the first double vector
      * @param vec2 the second double vector
      * @param delta minecraft tick delta
-     * @return the newly lerped {@link Vec3d}
+     * @return the newly lerped {@link Vector3d}
      */
-    public static Vec3d lerp(Vec3d vec1, Vec3d vec2, float delta) {
-        return new Vec3d(
-                MathHelper.lerp(delta, vec1.getX(), vec2.getX()),
-                MathHelper.lerp(delta, vec1.getY(), vec2.getY()),
-                MathHelper.lerp(delta, vec1.getZ(), vec2.getZ())
+    public static Vector3d lerp(Vector3d vec1, Vector3d vec2, float delta) {
+        return new Vector3d(
+                Mth.lerp(delta, vec1.x, vec2.x),
+                Mth.lerp(delta, vec1.y, vec2.y),
+                Mth.lerp(delta, vec1.z, vec2.z)
         );
     }
 
     /**
-     * Converts the given {@link Vec3f} into a new {@link NbtCompound}.
-     * @param vec the {@link Vec3f} to convert
-     * @return the new {@link NbtCompound}
+     * Converts the given {@link Vector3f} into a new {@link CompoundTag}.
+     * @param vec the {@link Vector3f} to convert
+     * @return the new {@link CompoundTag}
      */
-    public static NbtCompound toTag(Vec3f vec) {
-        var tag = new NbtCompound();
-        tag.putFloat("x", vec.getX());
-        tag.putFloat("y", vec.getY());
-        tag.putFloat("z", vec.getZ());
+    public static CompoundTag toTag(Vector3f vec) {
+        final var tag = new CompoundTag();
+        tag.putFloat("x", vec.x());
+        tag.putFloat("y", vec.y());
+        tag.putFloat("z", vec.z());
         return tag;
     }
 
     /**
-     * Retrieves a {@link Vec3f} from the given {@link NbtCompound}.
-     * @param tag the {@link NbtCompound} to retrieve the {@link Vec3f} from
-     * @return the new {@link Vec3f}
+     * Retrieves a {@link Vector3f} from the given {@link CompoundTag}.
+     * @param tag the {@link CompoundTag} to retrieve the {@link Vector3f} from
+     * @return the new {@link Vector3f}
      */
-    public static Vec3f fromTag(NbtCompound tag) {
-        return new Vec3f(
+    public static Vector3f fromTag(CompoundTag tag) {
+        return new Vector3f(
                 tag.getFloat("x"),
                 tag.getFloat("y"),
                 tag.getFloat("z")
@@ -75,23 +75,23 @@ public class VectorHelper {
     }
 
     /**
-     * Stuffs a {@link Vec3f} into a {@link PacketByteBuf}.
+     * Stuffs a {@link Vector3f} into a {@link FriendlyByteBuf}.
      * @param buf the buffer to stuff into
      * @param vec the vector to stuff
      */
-    public static void toBuffer(PacketByteBuf buf, Vec3f vec) {
-        buf.writeFloat(vec.getX());
-        buf.writeFloat(vec.getY());
-        buf.writeFloat(vec.getZ());
+    public static void toBuffer(FriendlyByteBuf buf, Vector3f vec) {
+        buf.writeFloat(vec.x());
+        buf.writeFloat(vec.y());
+        buf.writeFloat(vec.z());
     }
 
     /**
-     * Unpacks a {@link Vec3f} from a {@link PacketByteBuf}.
+     * Unpacks a {@link Vector3f} from a {@link FriendlyByteBuf}.
      * @param buf the buffer to unpack from
      * @return the newly unpacked vector
      */
-    public static Vec3f fromBuffer(PacketByteBuf buf) {
-        return new Vec3f(
+    public static Vector3f fromBuffer(FriendlyByteBuf buf) {
+        return new Vector3f(
                 buf.readFloat(),
                 buf.readFloat(),
                 buf.readFloat()

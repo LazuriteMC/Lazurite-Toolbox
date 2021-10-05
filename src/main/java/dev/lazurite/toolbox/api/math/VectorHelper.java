@@ -1,21 +1,21 @@
 package dev.lazurite.toolbox.api.math;
 
-import com.mojang.math.Vector3d;
 import com.mojang.math.Vector3f;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
 
 /**
  * A useful helper for dealing with Minecraft vectors.
  */
 public class VectorHelper {
-    public static Vector3f toVector3f(Vector3d vector3d) {
-        return new Vector3f((float) vector3d.x, (float) vector3d.y, (float) vector3d.z);
+    public static Vector3f toVector3f(Vec3 Vec3) {
+        return new Vector3f((float) Vec3.x, (float) Vec3.y, (float) Vec3.z);
     }
 
-    public static Vector3d toVector3d(Vector3f vector3f) {
-        return new Vector3d(vector3f.x(), vector3f.y(), vector3f.z());
+    public static Vec3 toVec3(Vector3f vector3f) {
+        return new Vec3(vector3f.x(), vector3f.y(), vector3f.z());
     }
 
     /**
@@ -34,14 +34,14 @@ public class VectorHelper {
     }
 
     /**
-     * Lerps two {@link Vector3d} objects using tick delta.
+     * Lerps two {@link Vec3} objects using tick delta.
      * @param vec1 the first double vector
      * @param vec2 the second double vector
      * @param delta minecraft tick delta
-     * @return the newly lerped {@link Vector3d}
+     * @return the newly lerped {@link Vec3}
      */
-    public static Vector3d lerp(Vector3d vec1, Vector3d vec2, float delta) {
-        return new Vector3d(
+    public static Vec3 lerp(Vec3 vec1, Vec3 vec2, float delta) {
+        return new Vec3(
                 Mth.lerp(delta, vec1.x, vec2.x),
                 Mth.lerp(delta, vec1.y, vec2.y),
                 Mth.lerp(delta, vec1.z, vec2.z)

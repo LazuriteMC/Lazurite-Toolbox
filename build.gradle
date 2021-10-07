@@ -1,35 +1,101 @@
-plugins {
-	id 'fabric-loom' version '0.8-SNAPSHOT'
-	id 'maven-publish'
+buildscript {
+	repositories {
+		// These repositories are only for Gradle plugins, put any other repositories in the repository block further below
+		maven { url = 'https://maven.minecraftforge.net' }
+		mavenCentral()
+	}
+	dependencies {
+		classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+	}
 }
+
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
+
+archivesBaseName = project.archives_base_name
+version = project.mod_version
+group = project.maven_group
 
 sourceCompatibility = JavaVersion.VERSION_16
 targetCompatibility = JavaVersion.VERSION_16
 
-allprojects { project ->
-	apply plugin: 'fabric-loom'
-	apply plugin: 'maven-publish'
-	apply plugin: 'java-library'
+minecraft {
+	mappings channel: 'official', version: '1.17.1'
 
-	dependencies {
-		minecraft "com.mojang:minecraft:${project.minecraft_version}"
-		mappings minecraft.officialMojangMappings()
-		modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-		modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+	//accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+
+	runs {
+		client {
+			workingDirectory project.file('run')
+
+			property 'forge.logging.markers', 'REGISTRIES'
+
+			property 'forge.logging.console.level', 'debug'
+
+			mods {
+				toolbox {
+					source sourceSets.main
+				}
+			}
+		}
+
+		server {
+			workingDirectory project.file('run')
+
+			property 'forge.logging.markers', 'REGISTRIES'
+
+			property 'forge.logging.console.level', 'debug'
+
+			mods {
+				toolbox {
+					source sourceSets.main
+				}
+			}
+		}
+
+		data {
+			workingDirectory project.file('run')
+
+			property 'forge.logging.markers', 'REGISTRIES'
+
+			property 'forge.logging.console.level', 'debug'
+
+			args '--mod', 'toolbox', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+
+			mods {
+				toolbox {
+					source sourceSets.main
+				}
+			}
+		}
 	}
+}
+
+
+allprojects { project ->
+	apply plugin: 'net.minecraftforge.gradle'
+	apply plugin: 'eclipse'
+	apply plugin: 'maven-publish'
+
+	sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 	archivesBaseName = project.archives_base_name
 	version = project.mod_version
 	group = project.maven_group
 
+	dependencies {
+		minecraft 'net.minecraftforge:forge:1.17.1-37.0.82'
+	}
+
 	processResources {
 		inputs.property "version", project.version
 
-		filesMatching("fabric.mod.json") {
+		filesMatching("META-INF/mods.toml") {
 			expand "version": project.version
 		}
 	}
-
+	
 	tasks.withType(JavaCompile) {
 		options.encoding = "UTF-8"
 		it.options.release = 16
@@ -50,53 +116,15 @@ allprojects { project ->
 		}
 	}
 
-	remapJar {
-	}
-
 	publishing {
 		publications {
 			mavenJava(MavenPublication) {
-				artifactId = 'toolbox'
-
-				pom {
-					name = 'Lazurite Toolbox'
-					description = 'A set of utils used by several Lazurite mods.'
-					url = 'https://github.com/LazuriteMC/Lazurite-Toolbox'
-					developers {
-						developer {
-							id = 'bluevista'
-							name = 'BlueVista'
-							email = 'ethan@ejohnsons.com'
-						}
-					}
-				}
-
-				versionMapping {
-					usage('java-api') {
-						fromResolutionOf('runtimeClasspath')
-					}
-					usage('java-runtime') {
-						fromResolutionResult()
-					}
-				}
-
-				artifact(remapJar) {
-					builtBy remapJar
-				}
-
-				artifact(sourcesJar) {
-					builtBy remapSourcesJar
-				}
+				artifact jar
 			}
 		}
-
 		repositories {
 			maven {
-				url = 'https://lazurite.dev/maven/releases'
-				credentials {
-					username = project.property("publish.lazurite.alias")
-					password = project.property("publish.lazurite.secret")
-				}
+				url "file://${project.projectDir}/mcmodsrepo"
 			}
 		}
 	}

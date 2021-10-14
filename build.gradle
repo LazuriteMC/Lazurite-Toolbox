@@ -122,7 +122,6 @@ allprojects { project ->
 
 	publishing {
 		publications {
-			println archivesBaseName
 			mavenJava(MavenPublication) {
 				artifactId archivesBaseName
 				artifact jar

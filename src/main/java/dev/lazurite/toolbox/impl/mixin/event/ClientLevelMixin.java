@@ -26,7 +26,7 @@ public class ClientLevelMixin {
     @Shadow @Final private Minecraft minecraft;
 
     @Inject(method = "<init>", at = @At("RETURN"))
-    public void init(ClientPacketListener clientPacketListener, ClientLevel.ClientLevelData clientLevelData, ResourceKey<Level> levelResourceKey, DimensionType dimensionType, int loadDistance, Supplier<ProfilerFiller> profiler, LevelRenderer levelRenderer, boolean debugWorld, long seed, CallbackInfo info) {
+    public void init(ClientPacketListener clientPacketListener, ClientLevel.ClientLevelData clientLevelData, ResourceKey<Level> resourceKey, DimensionType dimensionType, int i, int j, Supplier<ProfilerFiller> supplier, LevelRenderer levelRenderer, boolean bl, long l, CallbackInfo info) {
         BetterClientLifecycleEvents.LOAD_LEVEL.invoker().onLoadWorld(minecraft, (ClientLevel) (Object) this);
     }
 

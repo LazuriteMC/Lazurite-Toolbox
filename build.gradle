@@ -123,12 +123,13 @@ allprojects { project ->
 	publishing {
 		publications {
 			mavenJava(MavenPublication) {
-				artifactId archivesBaseName
 				artifact jar
 			}
 		}
 		repositories {
-			mavenLocal()
+			maven {
+				url "file://${rootProject.projectDir}/mcmodsrepo"
+			}
 		}
 	}
 

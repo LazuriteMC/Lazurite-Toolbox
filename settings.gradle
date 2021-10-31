@@ -1,8 +1,24 @@
 pluginManagement {
     repositories {
-        jcenter()
+        maven {
+            name 'Fabric'
+            url 'https://maven.fabricmc.net/'
+        }
+
+        maven {
+            name 'Forge'
+            url 'https://maven.minecraftforge.net/'
+        }
+
+        maven {
+            name 'Architectury'
+            url 'https://maven.architectury.dev/'
+        }
+
         gradlePluginPortal()
     }
 }
 
-rootProject.name = 'Lazurite Toolbox'
+rootProject.name = 'toolbox'
+
+include 'common', 'fabric', 'forge'

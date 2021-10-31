@@ -1,0 +1,25 @@
+modLoader = "javafml"
+loaderVersion = "[37,)"
+license = "MIT"
+
+[[mods]]
+modId = "toolbox"
+version = "${version}"
+displayName = "Lazurite dev.lazurite.toolbox.Toolbox"
+authors = "Lazurite Team"
+description = "Tools and extras used for Lazurite mods."
+logoFile = "assets/toolbox/icon.png"
+
+[[dependencies.toolbox]]
+modId = "forge"
+mandatory = true
+versionRange = "[37,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.toolbox]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.17.1,)"
+ordering = "NONE"
+side = "BOTH"

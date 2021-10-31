@@ -1,135 +1,81 @@
-buildscript {
-	repositories {
-		// These repositories are only for Gradle plugins, put any other repositories in the repository block further below
-		maven { url = 'https://maven.minecraftforge.net' }
-		mavenCentral()
-	}
-	dependencies {
-		classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
-	}
+plugins {
+    id 'architectury-plugin' version "$architectury_plugin_version"
+    id 'com.github.johnrengelman.shadow' version "$shadow_version"
+    id 'dev.architectury.loom' version "$loom_version" apply false
 }
 
-apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'eclipse'
-apply plugin: 'maven-publish'
-
-archivesBaseName = project.archives_base_name
-version = project.mod_version
-group = project.maven_group
-
-sourceCompatibility = JavaVersion.VERSION_16
-targetCompatibility = JavaVersion.VERSION_16
-
-minecraft {
-	mappings channel: 'official', version: '1.17.1'
-
-	//accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
-
-	runs {
-		client {
-			workingDirectory project.file('run')
-
-			property 'forge.logging.markers', 'REGISTRIES'
-
-			property 'forge.logging.console.level', 'debug'
-
-			mods {
-				toolbox {
-					source sourceSets.main
-				}
-			}
-		}
-
-		server {
-			workingDirectory project.file('run')
-
-			property 'forge.logging.markers', 'REGISTRIES'
-
-			property 'forge.logging.console.level', 'debug'
-
-			mods {
-				toolbox {
-					source sourceSets.main
-				}
-			}
-		}
-
-		data {
-			workingDirectory project.file('run')
-
-			property 'forge.logging.markers', 'REGISTRIES'
-
-			property 'forge.logging.console.level', 'debug'
-
-			args '--mod', 'toolbox', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
-
-			mods {
-				toolbox {
-					source sourceSets.main
-				}
-			}
-		}
-	}
+architectury {
+    minecraft minecraft_version
 }
 
+subprojects {
+    apply plugin: 'com.github.johnrengelman.shadow'
+    apply plugin: 'dev.architectury.loom'
+    apply plugin: 'architectury-plugin'
+    apply plugin: 'maven-publish'
 
-allprojects { project ->
-	apply plugin: 'net.minecraftforge.gradle'
-	apply plugin: 'eclipse'
-	apply plugin: 'maven-publish'
+    loom.silentMojangMappingsLicense()
 
-	sourceSets.main.resources { srcDir 'src/generated/resources' }
+    dependencies {
+        minecraft "com.mojang:minecraft:$minecraft_version"
+        mappings loom.officialMojangMappings()
+    }
 
-	archivesBaseName = project.archives_base_name
-	version = project.mod_version
-	group = project.maven_group
+    if (name != 'common') {
 
-	dependencies {
-		minecraft 'net.minecraftforge:forge:1.17.1-37.0.82'
-	}
+        configurations {
+            common
+            shadowCommon // Don't use shadow from the shadow plugin because we don't want IDEA to index this.
+            compileClasspath.extendsFrom common
+            runtimeClasspath.extendsFrom common
+        }
 
-	repositories {
-		mavenLocal()
-	}
+        shadowJar {
+            configurations = [project.configurations.shadowCommon]
+            classifier "dev-shadow"
+        }
 
-	processResources {
-		inputs.property "version", project.version
+        remapJar {
+            input.set shadowJar.archiveFile
+            dependsOn shadowJar
+            classifier null
+        }
 
-		filesMatching("META-INF/mods.toml") {
-			expand "version": project.version
-		}
-	}
-	
-	tasks.withType(JavaCompile) {
-		options.encoding = "UTF-8"
-		it.options.release = 16
-	}
+        //jar.classifier "dev"
 
-	task sourcesJar(type: Jar, dependsOn: classes) {
-		classifier = "sources"
-		from sourceSets.main.allSource
-	}
+        components.java {
+            withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
+                skip()
+            }
+        }
+    }
 
-	java {
-		withSourcesJar()
-	}
+    publishing {
+        repositories {
+            maven {
+                name 'Lazurite'
+                url 'https://lazurite.dev/releases'
 
-	jar {
-		from("LICENSE") {
-			rename { "${it}_${project.archivesBaseName}"}
-		}
-	}
+                credentials {
+                    username property('publish.lazurite.alias')
+                    password property('publish.lazurite.secret')
+                }
+            }
+        }
+    }
+}
 
-	publishing {
-		publications {
-			mavenJava(MavenPublication) {
-				artifact jar
-				artifactId archivesBaseName
-			}
-		}
-		repositories {
-                    mavenLocal()
-		}
-	}
+allprojects {
+    apply plugin: 'java'
 
+    version mod_version
+    group maven_group
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(16)
+        }
+
+        withSourcesJar()
+    }
 }

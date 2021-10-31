@@ -1,0 +1,40 @@
+architectury {
+	platformSetupLoomIde()
+	forge()
+}
+
+configurations {
+	developmentForge.extendsFrom common
+}
+
+dependencies {
+	forge "net.minecraftforge:forge:$minecraft_version-$forge_version"
+	common(project(path: ":common", configuration: "namedElements")).transitive false
+	shadowCommon(project(path: ":common", configuration: "transformProductionForge")).transitive = false
+}
+
+shadowJar {
+	exclude "fabric.mod.json"
+}
+
+sourcesJar {
+	def commonSources = project(":common").sourcesJar
+	dependsOn commonSources
+	from commonSources.archiveFile.map { zipTree(it) }
+}
+
+processResources {
+	inputs.property "version", version
+
+	filesMatching "META-INF/mods.toml", {
+		expand "version": version
+	}
+}
+
+publishing {
+	publications {
+		mavenForge(MavenPublication) {
+			from components.java
+		}
+	}
+}

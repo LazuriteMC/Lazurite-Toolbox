@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "toolbox",
+  "version": "${version}",
+
+  "name": "Lazurite Toolbox",
+  "description": "Tools and extras used for Lazurite mods.",
+  "authors": [ "The Lazurite Team" ],
+  "contact": {
+    "homepage": "https://lazurite.dev",
+    "sources": "https://github.com/lazuritemc/lazurite-toolbox",
+    "issues": "https://github.com/lazuritemc/lazurite-toolbox/issues"
+  },
+
+  "license": "MIT",
+  "icon": "assets/toolbox/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [ "dev.lazurite.toolbox.fabric.ToolboxFabric" ]
+  },
+
+  "depends": {
+    "fabricloader": ">=0.12",
+    "minecraft": "1.17.x"
+  }
+}

@@ -5,10 +5,10 @@ license = "MIT"
 [[mods]]
 modId = "toolbox"
 version = "${version}"
-displayName = "Lazurite dev.lazurite.toolbox.Toolbox"
+displayName = "Lazurite Toolbox"
 authors = "Lazurite Team"
 description = "Tools and extras used for Lazurite mods."
-logoFile = "assets/toolbox/icon.png"
+logoFile = "icon.png"
 
 [[dependencies.toolbox]]
 modId = "forge"

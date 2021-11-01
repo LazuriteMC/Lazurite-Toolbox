@@ -1,27 +1,14 @@
-architectury {
-	platformSetupLoomIde()
-	forge()
-}
-
 configurations {
 	developmentForge.extendsFrom common
 }
 
 dependencies {
 	forge "net.minecraftforge:forge:$minecraft_version-$forge_version"
-	common(project(path: ":common", configuration: "namedElements")).transitive false
-	shadowCommon(project(path: ":common", configuration: "transformProductionForge")).transitive = false
+	shadowCommon(project(path: ":common", configuration: "transformProductionForge")).transitive false
 }
 
-shadowJar {
-	exclude "fabric.mod.json"
-}
-
-sourcesJar {
-	def commonSources = project(":common").sourcesJar
-	dependsOn commonSources
-	from commonSources.archiveFile.map { zipTree(it) }
-}
+loom.forge.mixinConfig "toolbox.mixins.json"
+shadowJar.exclude "fabric.mod.json"
 
 processResources {
 	inputs.property "version", version
@@ -33,7 +20,7 @@ processResources {
 
 publishing {
 	publications {
-		mavenForge(MavenPublication) {
+		forge(MavenPublication) {
 			from components.java
 		}
 	}

@@ -8,20 +8,39 @@ architectury {
     minecraft minecraft_version
 }
 
+allprojects {
+    apply plugin: 'java'
+
+    version mod_version
+    group maven_group
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(16)
+        }
+
+        withSourcesJar()
+    }
+}
+
 subprojects {
     apply plugin: 'com.github.johnrengelman.shadow'
     apply plugin: 'dev.architectury.loom'
     apply plugin: 'architectury-plugin'
     apply plugin: 'maven-publish'
 
+    archivesBaseName = rootProject.archivesBaseName + '-' + name
     loom.silentMojangMappingsLicense()
+    architectury."$name"()
 
     dependencies {
         minecraft "com.mojang:minecraft:$minecraft_version"
         mappings loom.officialMojangMappings()
+        modApi "dev.architectury:architectury:$architectury_version"
     }
 
     if (name != 'common') {
+        architectury.platformSetupLoomIde()
 
         configurations {
             common
@@ -30,18 +49,22 @@ subprojects {
             runtimeClasspath.extendsFrom common
         }
 
+        dependencies {
+            common(project(path: ":common", configuration: "namedElements"))
+        }
+
         shadowJar {
             configurations = [project.configurations.shadowCommon]
-            classifier "dev-shadow"
         }
 
         remapJar {
-            input.set shadowJar.archiveFile
             dependsOn shadowJar
-            classifier null
+            input.set shadowJar.archiveFile
         }
 
-        //jar.classifier "dev"
+        sourcesJar {
+            from project(':common').sourceSets.main.allSource
+        }
 
         components.java {
             withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
@@ -62,20 +85,5 @@ subprojects {
                 }
             }
         }
-    }
-}
-
-allprojects {
-    apply plugin: 'java'
-
-    version mod_version
-    group maven_group
-
-    java {
-        toolchain {
-            languageVersion = JavaLanguageVersion.of(16)
-        }
-
-        withSourcesJar()
     }
 }

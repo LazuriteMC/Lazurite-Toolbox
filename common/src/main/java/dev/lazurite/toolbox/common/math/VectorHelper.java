@@ -1,4 +1,4 @@
-package dev.lazurite.toolbox.math;
+package dev.lazurite.toolbox.common.math;
 
 import com.mojang.math.Vector3f;
 import net.minecraft.nbt.CompoundTag;

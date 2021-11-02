@@ -15,9 +15,7 @@
   "license": "MIT",
   "icon": "assets/toolbox/icon.png",
   "environment": "*",
-  "mixins": [
-    "toolbox.mixins.json"
-  ],
+  "mixins": [ "toolbox.mixins.json" ],
   "entrypoints": {
     "main": [ "dev.lazurite.toolbox.fabric.ToolboxFabric" ]
   },

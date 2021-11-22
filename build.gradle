@@ -24,7 +24,6 @@ allprojects {
 }
 
 subprojects {
-    apply plugin: 'com.github.johnrengelman.shadow'
     apply plugin: 'dev.architectury.loom'
     apply plugin: 'architectury-plugin'
     apply plugin: 'maven-publish'
@@ -39,6 +38,7 @@ subprojects {
     }
 
     if (name != 'common') {
+        apply plugin: 'com.github.johnrengelman.shadow'
         architectury.platformSetupLoomIde()
 
         configurations {

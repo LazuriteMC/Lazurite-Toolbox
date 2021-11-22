@@ -17,7 +17,9 @@
   "environment": "*",
   "mixins": [ "toolbox.mixins.json" ],
   "entrypoints": {
-    "main": [ "dev.lazurite.toolbox.fabric.ToolboxFabric" ]
+    "main": [
+      "dev.lazurite.toolbox.fabric.ToolboxFabric"
+    ]
   },
 
   "depends": {

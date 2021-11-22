@@ -1,4 +1,4 @@
-package dev.lazurite.toolbox.common.mixin.plugin;
+package dev.lazurite.toolbox.impl.mixin.plugin;
 
 import net.fabricmc.loader.api.FabricLoader;
 

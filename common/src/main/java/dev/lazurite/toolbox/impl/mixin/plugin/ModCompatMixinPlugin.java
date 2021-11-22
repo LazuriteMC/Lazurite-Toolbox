@@ -1,4 +1,4 @@
-package dev.lazurite.toolbox.common.mixin.plugin;
+package dev.lazurite.toolbox.impl.mixin.plugin;
 
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;

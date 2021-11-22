@@ -1,6 +1,6 @@
-package dev.lazurite.toolbox.forge.mixin;
+package dev.lazurite.toolbox.impl.mixin.client;
 
-import dev.lazurite.toolbox.common.event.ClientLifecycleEvents;
+import dev.lazurite.toolbox.api.event.ClientLifecycleEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.multiplayer.ClientPacketListener;
@@ -25,11 +25,11 @@ public class ClientLevelMixin {
 
     @Inject(method = "<init>", at = @At("RETURN"))
     public void init(ClientPacketListener clientPacketListener, ClientLevel.ClientLevelData clientLevelData, ResourceKey resourceKey, DimensionType dimensionType, int i, Supplier supplier, LevelRenderer levelRenderer, boolean bl, long l, CallbackInfo ci) {
-        ClientLifecycleEvents.LOAD_LEVEL.invoker().onLoadWorld(minecraft, (ClientLevel) (Object) this);
+        ClientLifecycleEvents.LOAD_LEVEL.invoke(minecraft, this);
     }
 
     @Inject(method = "disconnect", at = @At("HEAD"))
     public void disconnect(CallbackInfo info) {
-        ClientLifecycleEvents.DISCONNECT.invoker().onDisconnect(minecraft, (ClientLevel) (Object) this);
+        ClientLifecycleEvents.DISCONNECT.invoke(minecraft, this);
     }
 }

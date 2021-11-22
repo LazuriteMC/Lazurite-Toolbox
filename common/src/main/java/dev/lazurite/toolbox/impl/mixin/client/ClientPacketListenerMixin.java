@@ -1,6 +1,6 @@
-package dev.lazurite.toolbox.common.mixin;
+package dev.lazurite.toolbox.impl.mixin.client;
 
-import dev.lazurite.toolbox.common.event.ClientLifecycleEvents;
+import dev.lazurite.toolbox.api.event.ClientLifecycleEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.multiplayer.ClientPacketListener;
@@ -29,6 +29,6 @@ public class ClientPacketListenerMixin {
             )
     )
     public void handleLogin(ClientboundLoginPacket packet, CallbackInfo info) {
-        ClientLifecycleEvents.LOGIN.invoker().onLogin(minecraft, level, minecraft.player);
+        ClientLifecycleEvents.LOGIN.invoke(minecraft, level, minecraft.player);
     }
 }

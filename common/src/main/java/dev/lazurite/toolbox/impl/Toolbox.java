@@ -1,4 +1,4 @@
-package dev.lazurite.toolbox.common;
+package dev.lazurite.toolbox.impl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -8,6 +8,6 @@ public class Toolbox {
     public static final Logger LOGGER = LogManager.getLogger("Lazurite Toolbox");
 
     public static void init() {
-        LOGGER.info("Test");
+
     }
 }

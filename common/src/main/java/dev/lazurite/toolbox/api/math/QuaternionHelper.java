@@ -1,4 +1,4 @@
-package dev.lazurite.toolbox.common.math;
+package dev.lazurite.toolbox.api.math;
 
 import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
@@ -7,6 +7,7 @@ import net.minecraft.network.FriendlyByteBuf;
 
 /**
  * A useful helper for dealing with Minecraft quaternions.
+ * @since 1.0.0
  */
 public class QuaternionHelper {
     /**

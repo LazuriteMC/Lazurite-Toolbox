@@ -1,11 +1,11 @@
 dependencies {
     modImplementation "net.fabricmc:fabric-loader:$fabric_loader_version"
-    modApi "dev.architectury:architectury:$architectury_version"
 }
 
 publishing {
     publications {
         common(MavenPublication) {
+            artifactId = archivesBaseName
             from components.java
         }
     }

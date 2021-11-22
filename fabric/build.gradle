@@ -5,7 +5,6 @@ configurations {
 dependencies {
     modImplementation "net.fabricmc:fabric-loader:$fabric_loader_version"
     modImplementation(fabricApi.module("fabric-api-base", fabric_api_version))
-    modApi "dev.architectury:architectury-fabric:$architectury_version"
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
 }
 
@@ -20,6 +19,7 @@ processResources {
 publishing {
     publications {
         fabric(MavenPublication) {
+            artifactId = archivesBaseName
             from components.java
         }
     }

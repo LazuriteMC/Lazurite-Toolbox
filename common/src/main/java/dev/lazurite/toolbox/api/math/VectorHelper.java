@@ -1,4 +1,4 @@
-package dev.lazurite.toolbox.common.math;
+package dev.lazurite.toolbox.api.math;
 
 import com.mojang.math.Vector3f;
 import net.minecraft.nbt.CompoundTag;
@@ -8,6 +8,7 @@ import net.minecraft.world.phys.Vec3;
 
 /**
  * A useful helper for dealing with Minecraft vectors.
+ * @since 1.0.0
  */
 public class VectorHelper {
     public static Vector3f toVector3f(Vec3 Vec3) {

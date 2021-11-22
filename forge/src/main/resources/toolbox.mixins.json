@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "dev.lazurite.toolbox.mixin",
+  "compatibilityLevel": "JAVA_16",
+  "mixins": [],
+  "client": [
+    "client.ClientPacketListenerMixin",
+    "client.ClientLevelMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

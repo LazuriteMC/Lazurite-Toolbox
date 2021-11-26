@@ -13,12 +13,12 @@
   },
 
   "license": "MIT",
-  "icon": "assets/toolbox/icon.png",
+  "icon": "icon.png",
   "environment": "*",
   "mixins": [ "toolbox.mixins.json" ],
   "entrypoints": {
     "main": [
-      "dev.lazurite.toolbox.fabric.ToolboxFabric"
+      "dev.lazurite.toolbox.impl.fabric.ToolboxFabric"
     ]
   },
 

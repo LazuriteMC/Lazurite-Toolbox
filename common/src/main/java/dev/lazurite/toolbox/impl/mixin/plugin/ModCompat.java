@@ -18,6 +18,7 @@ public class ModCompat {
         this.additionalMixins = new HashSet<>();
     }
 
+    // TODO
     public boolean isPresent() {
         return FabricLoader.getInstance().isModLoaded(this.id);
     }

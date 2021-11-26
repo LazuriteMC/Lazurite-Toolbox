@@ -1,4 +1,4 @@
-package dev.lazurite.toolbox.forge;
+package dev.lazurite.toolbox.impl.forge;
 
 import dev.lazurite.toolbox.impl.Toolbox;
 import net.minecraftforge.fml.common.Mod;

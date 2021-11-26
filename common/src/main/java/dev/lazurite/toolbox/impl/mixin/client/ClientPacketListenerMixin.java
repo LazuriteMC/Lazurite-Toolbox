@@ -1,4 +1,4 @@
-package dev.lazurite.toolbox.mixin.client;
+package dev.lazurite.toolbox.impl.mixin.client;
 
 import dev.lazurite.toolbox.api.event.ClientLifecycleEvents;
 import net.minecraft.client.Minecraft;

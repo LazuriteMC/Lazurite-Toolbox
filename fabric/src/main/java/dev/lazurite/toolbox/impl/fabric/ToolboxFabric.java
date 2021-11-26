@@ -1,4 +1,4 @@
-package dev.lazurite.toolbox.fabric;
+package dev.lazurite.toolbox.impl.fabric;
 
 import dev.lazurite.toolbox.impl.Toolbox;
 import net.fabricmc.api.ModInitializer;

@@ -17,13 +17,11 @@
   "environment": "*",
   "mixins": [ "toolbox.mixins.json" ],
   "entrypoints": {
-    "main": [
-      "dev.lazurite.toolbox.impl.fabric.ToolboxFabric"
-    ]
+    "main": [ "dev.lazurite.toolbox.impl.fabric.ToolboxFabric" ]
   },
 
   "depends": {
     "fabricloader": ">=0.12",
-    "minecraft": "1.17.x"
+    "minecraft": ">=1.18"
   }
 }

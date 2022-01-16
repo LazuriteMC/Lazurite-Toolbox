@@ -1,88 +1,67 @@
 plugins {
-    id 'architectury-plugin' version "$architectury_plugin_version"
+//    id 'architectury-plugin' version "$architectury_plugin_version"
     id 'com.github.johnrengelman.shadow' version "$shadow_version"
-    id 'dev.architectury.loom' version "$loom_version" apply false
+    id 'dev.architectury.loom' version "$loom_version"
+    id 'maven-publish'
 }
 
-architectury {
-    minecraft minecraft_version
-}
+//architectury {
+//    minecraft minecraft_version
+//    platformSetupLoomIde()
+//}
 
-allprojects {
-    apply plugin: 'java'
-
-    version mod_version
-    group maven_group
-
-    java {
-        toolchain {
-            languageVersion = JavaLanguageVersion.of(17)
-        }
-
-        withSourcesJar()
+jar {
+    manifest {
+        attributes += [ 'MixinConfigs': 'toolbox.mixins.json' ]
     }
 }
 
-subprojects {
-    apply plugin: 'dev.architectury.loom'
-    apply plugin: 'architectury-plugin'
-    apply plugin: 'maven-publish'
+loom.silentMojangMappingsLicense()
+version mod_version
+group maven_group
 
-    archivesBaseName = rootProject.archivesBaseName + '-' + name
-    loom.silentMojangMappingsLicense()
-    architectury."$name"()
-
-    dependencies {
-        minecraft "com.mojang:minecraft:$minecraft_version"
-        mappings loom.officialMojangMappings()
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
     }
 
-    if (name != 'common') {
-        apply plugin: 'com.github.johnrengelman.shadow'
-        architectury.platformSetupLoomIde()
+    withSourcesJar()
+}
 
-        configurations {
-            common
-            shadowCommon // Don't use shadow from the shadow plugin because we don't want IDEA to index this.
-            compileClasspath.extendsFrom common
-            runtimeClasspath.extendsFrom common
-        }
+dependencies {
+    minecraft "com.mojang:minecraft:$minecraft_version"
+    mappings loom.officialMojangMappings()
+//    modImplementation "net.fabricmc:fabric-loader:$fabric_loader_version"
+    annotationProcessor "org.spongepowered:mixin:0.8.5:processor"
+    implementation "org.spongepowered:mixin:0.8.5"
+}
 
-        dependencies {
-            common(project(path: ":common", configuration: "namedElements")) { transitive false }
-        }
+shadowJar {
+    configurations = [project.configurations.shadow]
+}
 
-        shadowJar {
-            configurations = [project.configurations.shadowCommon]
-        }
+remapJar {
+    dependsOn shadowJar
+    input.set shadowJar.archiveFile
+}
 
-        remapJar {
-            dependsOn shadowJar
-            input.set shadowJar.archiveFile
-        }
+publishing {
+    repositories {
+        maven {
+            name 'Lazurite'
+            url 'https://lazurite.dev/releases'
 
-        sourcesJar {
-            from project(':common').sourceSets.main.allSource
-        }
-
-        components.java {
-            withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
-                skip()
+            credentials {
+                username property('publish.lazurite.alias')
+                password property('publish.lazurite.secret')
             }
         }
     }
 
-    publishing {
-        repositories {
-            maven {
-                name 'Lazurite'
-                url 'https://lazurite.dev/releases'
-
-                credentials {
-                    username property('publish.lazurite.alias')
-                    password property('publish.lazurite.secret')
-                }
-            }
+    publications {
+        toolbox(MavenPublication) {
+            artifactId = archivesBaseName
+            from components.java
         }
     }
 }

@@ -1,0 +1,18 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "dev.lazurite.toolbox.impl.mixin",
+  "compatibilityLevel": "JAVA_16",
+  "mixins": [
+    "common.ServerGamePacketListenerImplMixin",
+    "common.access.IChunkMapMixin",
+    "common.access.ITrackedEntityMixin"
+  ],
+  "client": [
+    "client.ClientLevelMixin",
+    "client.ClientPacketListenerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -5,7 +5,6 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 
-import java.util.concurrent.Executor;
 import java.util.function.Consumer;
 
 public interface PacketRegistry {
@@ -17,6 +16,6 @@ public interface PacketRegistry {
         PacketRegistryImpl.registerClientbound(identifier, packetHandler);
     }
 
-    record ServerboundContext(Executor threadExecutor, FriendlyByteBuf byteBuf, ServerPlayer player) { }
-    record ClientboundContext(Executor threadExecutor, FriendlyByteBuf byteBuf) { }
+    record ServerboundContext(FriendlyByteBuf byteBuf, ServerPlayer player) { }
+    record ClientboundContext(FriendlyByteBuf byteBuf) { }
 }

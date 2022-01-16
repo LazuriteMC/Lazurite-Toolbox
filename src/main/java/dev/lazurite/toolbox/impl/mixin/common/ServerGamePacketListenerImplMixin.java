@@ -2,7 +2,6 @@ package dev.lazurite.toolbox.impl.mixin.common;
 
 import dev.lazurite.toolbox.api.network.PacketRegistry;
 import dev.lazurite.toolbox.impl.network.PacketRegistryImpl;
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.protocol.PacketUtils;
 import net.minecraft.network.protocol.game.ServerGamePacketListener;
 import net.minecraft.network.protocol.game.ServerboundCustomPayloadPacket;
@@ -28,7 +27,8 @@ public abstract class ServerGamePacketListenerImplMixin {
         PacketUtils.ensureRunningOnSameThread(serverboundCustomPayloadPacket, (ServerGamePacketListener) this, this.player.getLevel());
 
         PacketRegistryImpl.getServerbound(serverboundCustomPayloadPacket.getIdentifier()).ifPresent(consumer -> {
-            consumer.accept(new PacketRegistry.ServerboundContext(Minecraft.getInstance(), serverboundCustomPayloadPacket.getData(), this.player));
+            consumer.accept(new PacketRegistry.ServerboundContext(serverboundCustomPayloadPacket.getData(), this.player));
+            serverboundCustomPayloadPacket.getData().release();
             ci.cancel();
         });
     }

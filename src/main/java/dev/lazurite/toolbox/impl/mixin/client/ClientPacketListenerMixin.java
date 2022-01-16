@@ -47,7 +47,8 @@ public class ClientPacketListenerMixin {
     )
     public void handleCustomPayload(ClientboundCustomPayloadPacket clientboundCustomPayloadPacket, CallbackInfo ci) {
         PacketRegistryImpl.getClientbound(clientboundCustomPayloadPacket.getIdentifier()).ifPresent(consumer -> {
-            consumer.accept(new PacketRegistry.ClientboundContext(Minecraft.getInstance(), clientboundCustomPayloadPacket.getData()));
+            consumer.accept(new PacketRegistry.ClientboundContext(clientboundCustomPayloadPacket.getData()));
+            clientboundCustomPayloadPacket.getData().release();
             ci.cancel();
         });
     }

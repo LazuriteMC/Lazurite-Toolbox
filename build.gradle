@@ -1,60 +1,51 @@
 plugins {
     id 'com.github.johnrengelman.shadow' version "$shadow_version"
+    id 'architectury-plugin' version "$architectury_plugin_version"
     id 'dev.architectury.loom' version "$loom_version"
     id 'maven-publish'
 }
 
-jar {
-    manifest {
-        attributes += [ 'MixinConfigs': 'toolbox.mixins.json' ]
+allprojects {
+    apply plugin: 'com.github.johnrengelman.shadow'
+    apply plugin: 'dev.architectury.loom'
+    apply plugin: 'architectury-plugin'
+    apply plugin: 'maven-publish'
+
+    loom.silentMojangMappingsLicense()
+    version mod_version
+    group maven_group
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(17)
+        }
+
+        withSourcesJar()
     }
-}
 
-loom.silentMojangMappingsLicense()
-version mod_version
-group maven_group
-
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+    dependencies {
+        minecraft "com.mojang:minecraft:$minecraft_version"
+        mappings loom.officialMojangMappings()
     }
 
-    withSourcesJar()
-}
+    publishing {
+        repositories {
+            maven {
+                name 'Lazurite'
+                url 'https://lazurite.dev/releases'
 
-dependencies {
-    minecraft "com.mojang:minecraft:$minecraft_version"
-    mappings loom.officialMojangMappings()
-    annotationProcessor "org.spongepowered:mixin:$mixin_version:processor"
-    implementation "org.spongepowered:mixin:$mixin_version"
-}
-
-shadowJar {
-    configurations = [project.configurations.shadow]
-}
-
-remapJar {
-    dependsOn shadowJar
-    input.set shadowJar.archiveFile
-}
-
-publishing {
-    repositories {
-        maven {
-            name 'Lazurite'
-            url 'https://lazurite.dev/releases'
-
-            credentials {
-                username property('publish.lazurite.alias')
-                password property('publish.lazurite.secret')
+                credentials {
+                    username property('publish.lazurite.alias')
+                    password property('publish.lazurite.secret')
+                }
             }
         }
-    }
 
-    publications {
-        toolbox(MavenPublication) {
-            artifactId = archivesBaseName
-            from components.java
+        publications {
+            "$name"(MavenPublication) {
+                artifactId = archivesBaseName
+                from components.java
+            }
         }
     }
 }

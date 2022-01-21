@@ -1,0 +1,6 @@
+architectury.common()
+archivesBaseName = 'toolbox-common'
+
+dependencies {
+    modImplementation "net.fabricmc:fabric-loader:$fabric_loader_version"
+}

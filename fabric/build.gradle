@@ -1,0 +1,31 @@
+architectury.fabric()
+archivesBaseName = 'toolbox-fabric'
+
+configurations {
+    shadowCommon
+    transformProductionFabric
+}
+
+shadowJar.configurations = [project.configurations.shadowCommon]
+
+sourcesJar {
+    from rootProject.sourceSets.main.allSource
+}
+
+dependencies {
+    rootProject.path
+    shadowCommon(project(path: ':common', configuration: 'transformProductionFabric')) { transitive false }
+}
+
+tasks.withType(ProcessResources) {
+    inputs.property "version", version
+
+    filesMatching "fabric.mod.json", {
+        expand "version": version
+    }
+}
+
+remapJar {
+    dependsOn shadowJar
+    input.set shadowJar.archiveFile
+}

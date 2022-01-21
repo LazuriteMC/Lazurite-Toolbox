@@ -1,0 +1,32 @@
+architectury.forge()
+loom.forge.mixinConfig 'toolbox.mixins.json'
+archivesBaseName = 'toolbox-forge'
+
+configurations {
+    shadowCommon
+    transformProductionForge
+}
+
+shadowJar.configurations = [project.configurations.shadowCommon]
+
+sourcesJar {
+    from rootProject.sourceSets.main.allSource
+}
+
+dependencies {
+    forge "net.minecraftforge:forge:$minecraft_version-$forge_version"
+    shadowCommon(project(path: ':common', configuration: 'transformProductionForge')) { transitive false }
+}
+
+tasks.withType(ProcessResources) {
+    inputs.property "version", version
+
+    filesMatching "META-INF/mods.toml", {
+        expand "version": version
+    }
+}
+
+remapJar {
+    dependsOn shadowJar
+    input.set shadowJar.archiveFile
+}

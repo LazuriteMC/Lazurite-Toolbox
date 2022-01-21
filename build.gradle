@@ -38,6 +38,14 @@ remapJar {
     input.set shadowJar.archiveFile
 }
 
+tasks.withType(ProcessResources) {
+    inputs.property 'version', project.version
+
+    filesMatching 'fabric.mod.json', {
+        expand 'version': project.version
+    }
+}
+
 publishing {
     repositories {
         maven {

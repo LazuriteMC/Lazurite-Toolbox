@@ -28,11 +28,19 @@ allprojects {
         mappings loom.officialMojangMappings()
     }
 
-    publishing {
-        repositories {
-            maven {
-                name 'Lazurite'
-                url 'https://lazurite.dev/releases'
+tasks.withType(ProcessResources) {
+    inputs.property 'version', project.version
+
+    filesMatching 'fabric.mod.json', {
+        expand 'version': project.version
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            name 'Lazurite'
+            url 'https://lazurite.dev/releases'
 
                 credentials {
                     username property('publish.lazurite.alias')

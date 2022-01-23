@@ -1,39 +1,43 @@
 plugins {
-    id 'com.github.johnrengelman.shadow' version "$shadow_version"
     id 'architectury-plugin' version "$architectury_plugin_version"
     id 'dev.architectury.loom' version "$loom_version"
     id 'maven-publish'
 }
 
-allprojects {
-    apply plugin: 'com.github.johnrengelman.shadow'
-    apply plugin: 'dev.architectury.loom'
-    apply plugin: 'architectury-plugin'
-    apply plugin: 'maven-publish'
+version mod_version
+group maven_group
 
-    loom.silentMojangMappingsLicense()
-    version mod_version
-    group maven_group
+loom.silentMojangMappingsLicense()
+architectury.common()
 
-    java {
-        toolchain {
-            languageVersion = JavaLanguageVersion.of(17)
-        }
-
-        withSourcesJar()
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
     }
 
-    dependencies {
-        minecraft "com.mojang:minecraft:$minecraft_version"
-        mappings loom.officialMojangMappings()
-    }
+    withSourcesJar()
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:$minecraft_version"
+    mappings loom.officialMojangMappings()
+    modImplementation "net.fabricmc:fabric-loader:$fabric_loader_version"
+}
 
 tasks.withType(ProcessResources) {
-    inputs.property 'version', project.version
+    inputs.property "version", version
 
-    filesMatching 'fabric.mod.json', {
-        expand 'version': project.version
+    filesMatching "fabric.mod.json", {
+        expand "version": version
     }
+}
+
+transformProductionFabric {
+    archiveClassifier = ''
+}
+
+transformProductionForge {
+    archiveClassifier = ''
 }
 
 publishing {
@@ -42,17 +46,27 @@ publishing {
             name 'Lazurite'
             url 'https://lazurite.dev/releases'
 
-                credentials {
-                    username property('publish.lazurite.alias')
-                    password property('publish.lazurite.secret')
-                }
+            credentials {
+                username property('publish.lazurite.alias')
+                password property('publish.lazurite.secret')
+            }
+        }
+    }
+
+    publications {
+        forge(MavenPublication) {
+            artifactId = 'toolbox-forge'
+
+            artifact (transformProductionForge) {
+                builtBy transformProductionForge
             }
         }
 
-        publications {
-            "$name"(MavenPublication) {
-                artifactId = archivesBaseName
-                from components.java
+        fabric(MavenPublication) {
+            artifactId = 'toolbox-fabric'
+
+            artifact (transformProductionFabric) {
+                builtBy transformProductionFabric
             }
         }
     }

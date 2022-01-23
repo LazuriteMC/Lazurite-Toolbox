@@ -20,4 +20,3 @@ pluginManagement {
 }
 
 rootProject.name = 'toolbox'
-include 'common', 'fabric', 'forge'

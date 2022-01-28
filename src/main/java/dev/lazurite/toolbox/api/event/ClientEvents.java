@@ -66,12 +66,12 @@ public final class ClientEvents {
 
         @FunctionalInterface
         public interface EntityLoad {
-            void onStartTick(Entity entity);
+            void onStartTick(net.minecraft.world.entity.Entity entity);
         }
 
         @FunctionalInterface
         public interface EntityUnload {
-            void onEndTick(Entity entity);
+            void onEndTick(net.minecraft.world.entity.Entity entity);
         }
     }
 

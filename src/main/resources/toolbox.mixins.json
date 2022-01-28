@@ -4,13 +4,21 @@
   "package": "dev.lazurite.toolbox.impl.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "common.EntityCallbacksMixin",
+    "common.LevelMixin",
+    "common.MinecraftServerMixin",
+    "common.ServerEntityMixin",
     "common.ServerGamePacketListenerImplMixin",
+    "common.ServerLevelMixin",
     "common.access.IChunkMapMixin",
     "common.access.ITrackedEntityMixin"
   ],
   "client": [
+    "client.EntityCallbacksMixin",
     "client.ClientLevelMixin",
-    "client.ClientPacketListenerMixin"
+    "client.ClientPacketListenerMixin",
+    "client.LevelRendererMixin",
+    "client.MinecraftMixin"
   ],
   "injectors": {
     "defaultRequire": 1

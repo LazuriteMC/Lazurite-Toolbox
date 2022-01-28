@@ -1,6 +1,6 @@
 package dev.lazurite.toolbox.impl.mixin.client;
 
-import dev.lazurite.toolbox.api.event.ClientLifecycleEvents;
+import dev.lazurite.toolbox.api.event.ClientEvents;
 import dev.lazurite.toolbox.api.network.PacketRegistry;
 import dev.lazurite.toolbox.impl.network.PacketRegistryImpl;
 import net.minecraft.client.Minecraft;
@@ -22,7 +22,7 @@ public class ClientPacketListenerMixin {
     @Shadow private ClientLevel level;
 
     /**
-     * @see ClientLifecycleEvents
+     * @see ClientEvents.Lifecycle#LOGIN
      */
     @Inject(
             method = "handleLogin",
@@ -33,7 +33,7 @@ public class ClientPacketListenerMixin {
             )
     )
     public void handleLogin(ClientboundLoginPacket packet, CallbackInfo info) {
-        ClientLifecycleEvents.LOGIN.invoke(minecraft, level, minecraft.player);
+        ClientEvents.Lifecycle.LOGIN.invoke(minecraft, level, minecraft.player);
     }
 
     @Inject(

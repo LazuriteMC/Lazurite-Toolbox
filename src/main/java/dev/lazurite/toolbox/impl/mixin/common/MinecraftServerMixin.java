@@ -72,7 +72,7 @@ public class MinecraftServerMixin {
     public void createLevels(CallbackInfo info) {
         // yeah i know this is lazy but it suits my needs. sorry i5
         for (var level : this.levels.values()) {
-            ServerEvents.Lifecycle.LOAD_LEVEL.invoke(level);
+            ServerEvents.Lifecycle.LOAD_LEVEL.invoke(this, level);
         }
     }
 

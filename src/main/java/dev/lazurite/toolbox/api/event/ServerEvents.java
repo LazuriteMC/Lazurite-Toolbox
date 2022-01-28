@@ -50,12 +50,12 @@ public class ServerEvents {
 
         @FunctionalInterface
         public interface StartServerTick {
-            void onStartServerTick(ServerLevel level);
+            void onStartServerTick(MinecraftServer server);
         }
 
         @FunctionalInterface
         public interface EndServerTick {
-            void onEndServerTick(ServerLevel level);
+            void onEndServerTick(MinecraftServer server);
         }
     }
 

@@ -67,22 +67,22 @@ public class ServerEvents {
 
         @FunctionalInterface
         public interface Load {
-            void onLoad(Entity entity);
+            void onLoad(net.minecraft.world.entity.Entity entity);
         }
 
         @FunctionalInterface
         public interface Unload {
-            void onUnload(Entity entity);
+            void onUnload(net.minecraft.world.entity.Entity entity);
         }
 
         @FunctionalInterface
         public interface StartTracking {
-            void onStartTracking(Entity entity, ServerPlayer player);
+            void onStartTracking(net.minecraft.world.entity.Entity entity, ServerPlayer player);
         }
 
         @FunctionalInterface
         public interface StopTracking{
-            void onStopTracking(Entity entity, ServerPlayer player);
+            void onStopTracking(net.minecraft.world.entity.Entity entity, ServerPlayer player);
         }
     }
 }

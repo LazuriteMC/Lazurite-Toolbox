@@ -1,5 +1,6 @@
 package dev.lazurite.toolbox.impl.mixin.common;
 
+import dev.architectury.injectables.targets.ArchitecturyTarget;
 import dev.lazurite.toolbox.api.network.PacketRegistry;
 import dev.lazurite.toolbox.impl.network.PacketRegistryImpl;
 import net.minecraft.network.protocol.PacketUtils;
@@ -18,13 +19,12 @@ public abstract class ServerGamePacketListenerImplMixin {
 
     @Shadow public ServerPlayer player;
 
-    @Inject(
-            method = "handleCustomPayload",
-            at = @At("HEAD"),
-            cancellable = true
-    )
+    @Inject(method = "handleCustomPayload", at = @At("HEAD"), cancellable = true)
     public void handleCustomPayload(ServerboundCustomPayloadPacket serverboundCustomPayloadPacket, CallbackInfo ci) {
-        PacketUtils.ensureRunningOnSameThread(serverboundCustomPayloadPacket, (ServerGamePacketListener) this, this.player.getLevel());
+        // forge already has this :/
+        if (ArchitecturyTarget.getCurrentTarget().equals("fabric")) {
+            PacketUtils.ensureRunningOnSameThread(serverboundCustomPayloadPacket, (ServerGamePacketListener) this, this.player.getLevel());
+        }
 
         PacketRegistryImpl.getServerbound(serverboundCustomPayloadPacket.getIdentifier()).ifPresent(consumer -> {
             consumer.accept(new PacketRegistry.ServerboundContext(serverboundCustomPayloadPacket.getData(), this.player));

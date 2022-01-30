@@ -28,7 +28,6 @@ public abstract class ServerGamePacketListenerImplMixin {
 
         PacketRegistryImpl.getServerbound(serverboundCustomPayloadPacket.getIdentifier()).ifPresent(consumer -> {
             consumer.accept(new PacketRegistry.ServerboundContext(serverboundCustomPayloadPacket.getData(), this.player));
-            serverboundCustomPayloadPacket.getData().release();
             ci.cancel();
         });
     }

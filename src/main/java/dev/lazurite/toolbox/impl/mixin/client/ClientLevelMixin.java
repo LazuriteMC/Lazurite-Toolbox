@@ -4,6 +4,8 @@ import dev.lazurite.toolbox.api.event.ClientEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.multiplayer.ClientPacketListener;
+import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.profiling.ProfilerFiller;
@@ -39,6 +41,14 @@ public class ClientLevelMixin {
     @Inject(method = "tickEntities", at = @At("HEAD"))
     public void tickEntities(CallbackInfo info) {
         ClientEvents.Tick.START_LEVEL_TICK.invoke(this);
+    }
+
+    /**
+     * @see ClientEvents.Player#ADD
+     */
+    @Inject(method = "addPlayer", at = @At("TAIL"))
+    public void addPlayer(int i, AbstractClientPlayer abstractClientPlayer, CallbackInfo ci) {
+        ClientEvents.Player.ADD.invoke(abstractClientPlayer, abstractClientPlayer instanceof LocalPlayer);
     }
 
     /**

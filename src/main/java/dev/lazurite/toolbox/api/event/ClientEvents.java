@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.player.LocalPlayer;
 
 /**
@@ -72,6 +73,15 @@ public final class ClientEvents {
         @FunctionalInterface
         public interface EntityUnload {
             void onEndTick(net.minecraft.world.entity.Entity entity);
+        }
+    }
+
+    public static class Player {
+        public static final Event<PlayerAdd> ADD = Event.create();
+
+        @FunctionalInterface
+        public interface PlayerAdd {
+            void onAdd(AbstractClientPlayer abstractClientPlayer, boolean isLocalPlayer);
         }
     }
 

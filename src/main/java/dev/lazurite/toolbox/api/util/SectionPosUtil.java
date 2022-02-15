@@ -34,6 +34,6 @@ public class SectionPosUtil {
         return SectionPosUtil.of(entity.position());
     }
 
-    private SectionPosUtil() { }
+    protected SectionPosUtil() { }
 
 }

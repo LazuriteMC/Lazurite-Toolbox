@@ -31,6 +31,6 @@ public class BlockPosUtil {
         return BlockPosUtil.of(entity.position());
     }
 
-    private BlockPosUtil() { }
+    protected BlockPosUtil() { }
 
 }

@@ -8,15 +8,19 @@ import net.minecraft.world.phys.Vec3;
  * Utility class for dealing with {@link BlockPos}.
  * @since 1.2.7
  */
-public final class BlockPosUtil {
+public class BlockPosUtil {
 
     public static int posToBlockCoord(double dCoord) {
         final var iCoord = (int) dCoord;
         return dCoord < (double) iCoord ? iCoord - 1 : iCoord;
     }
 
+    public static BlockPos of(int x, int y, int z) {
+        return new BlockPos(x, y, z);
+    }
+
     public static BlockPos of(Vec3 pos) {
-        return new BlockPos(
+        return BlockPosUtil.of(
                 BlockPosUtil.posToBlockCoord(pos.x()),
                 BlockPosUtil.posToBlockCoord(pos.y()),
                 BlockPosUtil.posToBlockCoord(pos.z())

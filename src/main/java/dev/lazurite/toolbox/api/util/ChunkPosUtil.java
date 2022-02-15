@@ -8,7 +8,7 @@ import net.minecraft.world.phys.Vec3;
  * Utility class for dealing with {@link ChunkPos}.
  * @since 1.2.7
  */
-public final class ChunkPosUtil {
+public class ChunkPosUtil {
 
     public static int posToChunkCoord(double coord) {
         return ChunkPosUtil.blockToChunkCoord(BlockPosUtil.posToBlockCoord(coord));
@@ -18,8 +18,12 @@ public final class ChunkPosUtil {
         return coord >> 4;
     }
 
+    public static ChunkPos of(int x, int z) {
+        return new ChunkPos(x, z);
+    }
+
     public static ChunkPos of(Vec3 pos) {
-        return new ChunkPos(
+        return ChunkPosUtil.of(
                 ChunkPosUtil.posToChunkCoord(pos.x()),
                 ChunkPosUtil.posToChunkCoord(pos.z())
         );

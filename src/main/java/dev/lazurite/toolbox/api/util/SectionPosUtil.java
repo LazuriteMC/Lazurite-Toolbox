@@ -8,7 +8,7 @@ import net.minecraft.world.phys.Vec3;
  * Utility class for dealing with {@link SectionPos}.
  * @since 1.2.7
  */
-public final class SectionPosUtil {
+public class SectionPosUtil {
 
     public static int posToSectionCoord(double coord) {
         return SectionPosUtil.blockToSectionCoord(BlockPosUtil.posToBlockCoord(coord));
@@ -18,8 +18,12 @@ public final class SectionPosUtil {
         return coord >> 4;
     }
 
+    public static SectionPos of(int x, int y, int z) {
+        return SectionPos.of(x, y, z);
+    }
+
     public static SectionPos of(Vec3 pos) {
-        return SectionPos.of(
+        return SectionPosUtil.of(
                 SectionPosUtil.posToSectionCoord(pos.x()),
                 SectionPosUtil.posToSectionCoord(pos.y()),
                 SectionPosUtil.posToSectionCoord(pos.z())

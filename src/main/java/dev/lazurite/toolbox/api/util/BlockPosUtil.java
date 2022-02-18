@@ -19,6 +19,14 @@ public class BlockPosUtil {
         return new BlockPos(x, y, z);
     }
 
+    public static BlockPos of(double x, double y, double z) {
+        return new BlockPos(
+                BlockPosUtil.posToBlockCoord(x),
+                BlockPosUtil.posToBlockCoord(y),
+                BlockPosUtil.posToBlockCoord(z)
+        );
+    }
+
     public static BlockPos of(Vec3 pos) {
         return BlockPosUtil.of(
                 BlockPosUtil.posToBlockCoord(pos.x()),

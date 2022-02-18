@@ -22,6 +22,14 @@ public class SectionPosUtil {
         return SectionPos.of(x, y, z);
     }
 
+    public static SectionPos of(double x, double y, double z) {
+        return SectionPos.of(
+                SectionPosUtil.posToSectionCoord(x),
+                SectionPosUtil.posToSectionCoord(y),
+                SectionPosUtil.posToSectionCoord(z)
+        );
+    }
+
     public static SectionPos of(Vec3 pos) {
         return SectionPosUtil.of(
                 SectionPosUtil.posToSectionCoord(pos.x()),

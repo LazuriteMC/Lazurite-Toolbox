@@ -16,7 +16,7 @@ public final class ClientEvents {
     public static class Lifecycle {
         public static final Event<LoadLevel> LOAD_LEVEL = Event.create();
         public static final Event<PreLogin> PRE_LOGIN = Event.create();
-        public static final Event<PreLogin> POST_LOGIN = Event.create();
+        public static final Event<PostLogin> POST_LOGIN = Event.create();
         public static final Event<Disconnect> DISCONNECT = Event.create();
 
         @FunctionalInterface

@@ -7,6 +7,7 @@
     "common.EntityCallbacksMixin",
     "common.LevelMixin",
     "common.MinecraftServerMixin",
+    "common.PlayerListMixin",
     "common.ServerEntityMixin",
     "common.ServerGamePacketListenerImplMixin",
     "common.ServerLevelMixin",
@@ -14,9 +15,9 @@
     "common.access.ITrackedEntityMixin"
   ],
   "client": [
-    "client.EntityCallbacksMixin",
     "client.ClientLevelMixin",
     "client.ClientPacketListenerMixin",
+    "client.EntityCallbacksMixin",
     "client.LevelRendererMixin",
     "client.MinecraftMixin"
   ],

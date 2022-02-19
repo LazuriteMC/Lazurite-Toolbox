@@ -54,11 +54,13 @@ publishing {
     }
 
     publications {
-        forge(MavenPublication) {
-            artifactId = 'toolbox-forge'
+        if (forge_enabled.toBoolean()) {
+            forge(MavenPublication) {
+                artifactId = 'toolbox-forge'
 
-            artifact (transformProductionForge) {
-                builtBy transformProductionForge
+                artifact(transformProductionForge) {
+                    builtBy transformProductionForge
+                }
             }
         }
 

@@ -10,6 +10,7 @@ public class ServerEvents {
         public static final Event<UnloadLevel> UNLOAD_LEVEL = Event.create();
         public static final Event<ServerLoad> LOAD_SERVER = Event.create();
         public static final Event<ServerUnload> UNLOAD_SERVER = Event.create();
+        public static final Event<Join> JOIN = Event.create();
 
         @FunctionalInterface
         public interface LoadLevel {
@@ -29,6 +30,11 @@ public class ServerEvents {
         @FunctionalInterface
         public interface ServerUnload {
             void onServerUnload(MinecraftServer server);
+        }
+
+        @FunctionalInterface
+        public interface Join {
+            void onJoin(ServerPlayer player);
         }
     }
 

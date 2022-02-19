@@ -18,15 +18,19 @@ public class EventImpl<T> implements Event<T> {
 
     @Override
     public void invoke(Object... params) {
-        try {
-            for (T event : events) {
-                var method = event.getClass().getMethods()[0];
+        for (T event : events) {
+            var method = event.getClass().getMethods()[0];
+
+            try {
                 method.setAccessible(true);
                 method.invoke(event, params);
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+                throw new RuntimeException(String.format("Event %s requires %d parameters but %d parameters were given.", event.getClass().getName(), method.getParameterCount(), params.length));
+            } catch (Exception e) {
+                e.printStackTrace();
+                throw new RuntimeException(String.format("Failed to invoke %s in %s.", method.getName(), event.getClass().getName()));
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("Event must use a functional interface.");
         }
     }
 }

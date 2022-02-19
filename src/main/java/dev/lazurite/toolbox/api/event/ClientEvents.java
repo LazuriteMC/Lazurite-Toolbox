@@ -15,7 +15,8 @@ import net.minecraft.client.player.LocalPlayer;
 public final class ClientEvents {
     public static class Lifecycle {
         public static final Event<LoadLevel> LOAD_LEVEL = Event.create();
-        public static final Event<Login> LOGIN = Event.create();
+        public static final Event<PreLogin> PRE_LOGIN = Event.create();
+        public static final Event<PreLogin> POST_LOGIN = Event.create();
         public static final Event<Disconnect> DISCONNECT = Event.create();
 
         @FunctionalInterface
@@ -24,8 +25,13 @@ public final class ClientEvents {
         }
 
         @FunctionalInterface
-        public interface Login {
-            void onLogin(Minecraft minecraft, ClientLevel level, LocalPlayer player);
+        public interface PreLogin {
+            void onPreLogin(Minecraft minecraft);
+        }
+
+        @FunctionalInterface
+        public interface PostLogin {
+            void onPostLogin(Minecraft minecraft, ClientLevel level, LocalPlayer player);
         }
 
         @FunctionalInterface

@@ -22,7 +22,7 @@ public class ClientPacketListenerMixin {
     @Shadow private ClientLevel level;
 
     /**
-     * @see ClientEvents.Lifecycle#LOGIN
+     * @see ClientEvents.Lifecycle#PRE_LOGIN
      */
     @Inject(
             method = "handleLogin",
@@ -32,8 +32,16 @@ public class ClientPacketListenerMixin {
                     shift = At.Shift.AFTER
             )
     )
-    public void handleLogin(ClientboundLoginPacket packet, CallbackInfo info) {
-        ClientEvents.Lifecycle.LOGIN.invoke(minecraft, level, minecraft.player);
+    public void handleLogin_PRE(ClientboundLoginPacket packet, CallbackInfo info) {
+        ClientEvents.Lifecycle.PRE_LOGIN.invoke(minecraft);
+    }
+
+    /**
+     * @see ClientEvents.Lifecycle#POST_LOGIN
+     */
+    @Inject(method = "handleLogin", at = @At("RETURN"))
+    public void handleLogin_POST(ClientboundLoginPacket packet, CallbackInfo info) {
+        ClientEvents.Lifecycle.POST_LOGIN.invoke(minecraft, level, minecraft.player);
     }
 
     @Inject(

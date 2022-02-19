@@ -8,7 +8,7 @@ version mod_version
 group maven_group
 
 loom.silentMojangMappingsLicense()
-architectury.common()
+architectury.common(forge_enabled.toBoolean())
 
 java {
     toolchain {

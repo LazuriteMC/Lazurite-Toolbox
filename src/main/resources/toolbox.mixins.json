@@ -4,6 +4,7 @@
   "package": "dev.lazurite.toolbox.impl.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "common.BlockStateBaseMixin",
     "common.EntityCallbacksMixin",
     "common.LevelMixin",
     "common.MinecraftServerMixin",

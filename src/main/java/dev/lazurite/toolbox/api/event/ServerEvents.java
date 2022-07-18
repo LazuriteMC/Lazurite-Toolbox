@@ -1,8 +1,11 @@
 package dev.lazurite.toolbox.api.event;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class ServerEvents {
     public static class Lifecycle {
@@ -65,6 +68,14 @@ public class ServerEvents {
         }
     }
 
+    public static class Block {
+        public static final Event<BlockUpdate> BLOCK_UPDATE = Event.create();
+
+        @FunctionalInterface
+        public interface BlockUpdate {
+            void onBlockUpdate(Level level, BlockState blockState, BlockPos blockPos);
+        }
+    }
     public static class Entity {
         public static final Event<Load> LOAD = Event.create();
         public static final Event<Unload> UNLOAD = Event.create();

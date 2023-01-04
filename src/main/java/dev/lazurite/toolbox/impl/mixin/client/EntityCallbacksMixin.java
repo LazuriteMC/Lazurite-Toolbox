@@ -9,12 +9,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(targets = "net/minecraft/client/multiplayer/ClientLevel$EntityCallbacks")
 public class EntityCallbacksMixin {
-    @Inject(method = "onTrackingStart", at = @At("TAIL"))
+    @Inject(method = "onTrackingStart*", at = @At("TAIL"))
     private void startTracking(Entity entity, CallbackInfo ci) {
         ClientEvents.Entity.LOAD.invoke(entity);
     }
 
-    @Inject(method = "onTrackingEnd", at = @At("HEAD"))
+    @Inject(method = "onTrackingEnd*", at = @At("HEAD"))
     private void stopTracking(Entity entity, CallbackInfo info) {
         ClientEvents.Entity.UNLOAD.invoke(entity);
     }

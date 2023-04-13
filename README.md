@@ -1,2 +1,3 @@
-# Lazurite-Toolbox
-A set of utils used by several Lazurite mods.
+# Lazurite Toolbox
+
+A set of utilities used by Lazurite mods.

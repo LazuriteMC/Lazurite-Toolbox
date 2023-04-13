@@ -1,0 +1,45 @@
+architectury {
+    platformSetupLoomIde()
+    fabric()
+}
+
+configurations {
+    common
+    shadowCommon
+    compileClasspath.extendsFrom common
+    runtimeClasspath.extendsFrom common
+    developmentFabric.extendsFrom common
+}
+
+shadowJar {
+    configurations = [project.configurations.shadowCommon]
+}
+
+components.java {
+    withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
+        skip()
+    }
+}
+
+dependencies {
+    modImplementation "net.fabricmc:fabric-loader:$fabric_loader_version"
+    common(project(path: ":common", configuration: "namedElements"))
+    shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
+}
+
+remapJar {
+    dependsOn shadowJar
+    input.set shadowJar.archiveFile
+}
+
+tasks.withType(ProcessResources) {
+    inputs.property "version", version
+
+    filesMatching "fabric.mod.json", {
+        expand "version": version
+    }
+}
+
+sourcesJar {
+    from project(":common").sourceSets.main.allSource
+}

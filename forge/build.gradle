@@ -1,0 +1,46 @@
+loom.forge.mixinConfig 'toolbox.mixins.json'
+
+architectury {
+    platformSetupLoomIde()
+    forge()
+}
+
+configurations {
+    common
+    shadowCommon
+    compileClasspath.extendsFrom common
+    runtimeClasspath.extendsFrom common
+    developmentForge.extendsFrom common
+}
+
+dependencies {
+    forge "net.minecraftforge:forge:$minecraft_version-$forge_version"
+    common(project(path: ":common", configuration: "namedElements")) { transitive false }
+    shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive false }
+}
+
+tasks.withType(ProcessResources) {
+    inputs.property "version", version
+
+    filesMatching "META-INF/mods.toml", {
+        expand "version": version
+    }
+}
+
+shadowJar {
+    exclude "fabric.mod.json"
+
+    configurations = [project.configurations.shadowCommon]
+    classifier "dev-shadow"
+}
+
+remapJar {
+    input.set shadowJar.archiveFile
+    dependsOn shadowJar
+}
+
+components.java {
+    withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
+        skip()
+    }
+}

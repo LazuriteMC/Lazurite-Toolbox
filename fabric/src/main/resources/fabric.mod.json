@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "toolbox",
+  "version": "${version}",
+
+  "name": "Lazurite Toolbox",
+  "description": "A set of utilities used by Lazurite mods.",
+  "authors": [ "The Lazurite Team" ],
+  "contact": {
+    "homepage": "https://lazurite.dev",
+    "sources": "https://github.com/LazuriteMC/Lazurite-Toolbox",
+    "issues": "https://github.com/LazuriteMC/Lazurite-Toolbox/issues"
+  },
+
+  "license": "MIT",
+  "environment": "*",
+  "icon": "icon.png",
+  "mixins": [ "toolbox.mixins.json" ],
+
+  "entrypoints": {
+    "main": [ "dev.lazurite.toolbox.fabric.ToolboxFabric" ]
+  },
+
+  "depends": {
+    "minecraft": ">=1.19",
+    "fabricloader": ">=0.14"
+  },
+
+  "custom": {
+    "modmenu": {
+      "badges": [ "library" ],
+      "links": {
+        "modmenu.discord": "https://discord.gg/NNPPHN7b3P"
+      }
+    }
+  }
+}

@@ -1,4 +1,8 @@
-loom.forge.mixinConfig 'toolbox.mixins.json'
+loom {
+    forge {
+        mixinConfig('toolbox.mixins.json')
+    }
+}
 
 architectury {
     platformSetupLoomIde()

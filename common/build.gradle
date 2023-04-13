@@ -3,3 +3,11 @@ architectury.common(forge_enabled.toBoolean())
 dependencies {
     modImplementation "net.fabricmc:fabric-loader:$fabric_loader_version"
 }
+
+testing {
+    suites {
+        test {
+            useJUnitJupiter()
+        }
+    }
+}

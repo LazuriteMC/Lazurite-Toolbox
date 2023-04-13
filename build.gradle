@@ -5,6 +5,8 @@ plugins {
     id 'java'
 }
 
+archivesBaseName = 'toolbox'
+
 architectury {
     minecraft = rootProject.minecraft_version
 }

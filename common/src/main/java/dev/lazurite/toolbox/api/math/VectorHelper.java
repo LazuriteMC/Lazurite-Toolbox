@@ -1,10 +1,10 @@
 package dev.lazurite.toolbox.api.math;
 
+import com.mojang.math.Vector3f;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
-import org.joml.Vector3f;
 
 /**
  * A useful helper for dealing with Minecraft vectors.

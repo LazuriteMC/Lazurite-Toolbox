@@ -20,7 +20,7 @@ public class PlayerUtil {
      * @author tmvkrpxl0
      */
     public static Set<ServerPlayer> tracking(Entity entity) {
-        final var chunkMap = ((ServerChunkCache) entity.getLevel().getChunkSource()).chunkMap;
+        final var chunkMap = ((ServerChunkCache) entity.level().getChunkSource()).chunkMap;
         final var tracked = ((IChunkMapMixin) chunkMap).getEntityMap().get(entity.getId());
 
         if (tracked != null) {

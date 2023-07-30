@@ -6,6 +6,7 @@ import dev.lazurite.toolbox.impl.network.PacketRegistryImpl;
 import net.minecraft.network.protocol.PacketUtils;
 import net.minecraft.network.protocol.game.ServerGamePacketListener;
 import net.minecraft.network.protocol.game.ServerboundCustomPayloadPacket;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import org.spongepowered.asm.mixin.Mixin;
@@ -23,7 +24,7 @@ public abstract class ServerGamePacketListenerImplMixin {
     public void handleCustomPayload(ServerboundCustomPayloadPacket serverboundCustomPayloadPacket, CallbackInfo ci) {
         // forge already has this :/
         if (ArchitecturyTarget.getCurrentTarget().equals("fabric")) {
-            PacketUtils.ensureRunningOnSameThread(serverboundCustomPayloadPacket, (ServerGamePacketListener) this, this.player.getLevel());
+            PacketUtils.ensureRunningOnSameThread(serverboundCustomPayloadPacket, (ServerGamePacketListener) this, (ServerLevel) this.player.level());
         }
 
         PacketRegistryImpl.getServerbound(serverboundCustomPayloadPacket.getIdentifier()).ifPresent(consumer -> {
